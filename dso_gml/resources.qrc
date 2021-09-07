@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/dso_gml" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>

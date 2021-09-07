@@ -1,0 +1,368 @@
+<!DOCTYPE qgis-layer-definition>
+<qlr>
+  <layer-tree-group name="" expanded="1" checked="Qt::Checked">
+    <customproperties/>
+    <layer-tree-group name="GIO" expanded="1" checked="Qt::Checked">
+      <customproperties/>
+      <layer-tree-layer id="voorbeeld_d8a043e2_1cf3_4d3d_a2a7_e86bd7e21377" legend_split_behavior="0" source="./voorbeeld.geojson" name="voorbeeld" patch_size="-1,-1" expanded="1" legend_exp="" checked="Qt::Checked" providerKey="ogr">
+        <customproperties/>
+      </layer-tree-layer>
+    </layer-tree-group>
+  </layer-tree-group>
+  <maplayers>
+    <maplayer wkbType="Polygon" autoRefreshEnabled="0" simplifyMaxScale="1" maxScale="0" hasScaleBasedVisibilityFlag="0" simplifyAlgorithm="0" minScale="100000000" readOnly="0" simplifyDrawingHints="1" autoRefreshTime="0" styleCategories="AllStyleCategories" geometry="Polygon" simplifyDrawingTol="1" labelsEnabled="0" type="vector" refreshOnNotifyMessage="" refreshOnNotifyEnabled="0" simplifyLocal="1">
+      <extent>
+        <xmin>101380.57538917513738852</xmin>
+        <ymin>487870.97771552851190791</ymin>
+        <xmax>104675.56216770873288624</xmax>
+        <ymax>489544.41588257905095816</ymax>
+      </extent>
+      <id>voorbeeld_d8a043e2_1cf3_4d3d_a2a7_e86bd7e21377</id>
+      <datasource>./voorbeeld.geojson</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>voorbeeld</layername>
+      <srs>
+        <spatialrefsys>
+          <wkt>PROJCRS["Amersfoort / RD New",BASEGEOGCRS["Amersfoort",DATUM["Amersfoort",ELLIPSOID["Bessel 1841",6377397.155,299.1528128,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4289]],CONVERSION["RD New",METHOD["Oblique Stereographic",ID["EPSG",9809]],PARAMETER["Latitude of natural origin",52.1561605555556,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8801]],PARAMETER["Longitude of natural origin",5.38763888888889,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8802]],PARAMETER["Scale factor at natural origin",0.9999079,SCALEUNIT["unity",1],ID["EPSG",8805]],PARAMETER["False easting",155000,LENGTHUNIT["metre",1],ID["EPSG",8806]],PARAMETER["False northing",463000,LENGTHUNIT["metre",1],ID["EPSG",8807]]],CS[Cartesian,2],AXIS["easting (X)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["northing (Y)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["unknown"],AREA["Netherlands - onshore"],BBOX[50.75,3.2,53.7,7.22]],ID["EPSG",28992]]</wkt>
+          <proj4>+proj=sterea +lat_0=52.1561605555556 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +units=m +no_defs</proj4>
+          <srsid>2517</srsid>
+          <srid>28992</srid>
+          <authid>EPSG:28992</authid>
+          <description>Amersfoort / RD New</description>
+          <projectionacronym>sterea</projectionacronym>
+          <ellipsoidacronym>EPSG:7004</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <wkt></wkt>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>false</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+        <Private>0</Private>
+      </flags>
+      <temporal durationField="" accumulate="0" startField="" durationUnit="min" endField="" fixedDuration="0" startExpression="" enabled="0" mode="0" endExpression="">
+        <fixedRange>
+          <start></start>
+          <end></end>
+        </fixedRange>
+      </temporal>
+      <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0">
+        <symbols>
+          <symbol clip_to_extent="1" type="fill" name="0" force_rhr="0" alpha="1">
+            <data_defined_properties>
+              <Option type="Map">
+                <Option type="QString" name="name" value=""/>
+                <Option name="properties"/>
+                <Option type="QString" name="type" value="collection"/>
+              </Option>
+            </data_defined_properties>
+            <layer class="SimpleFill" pass="0" locked="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="border_width_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="color" value="133,182,111,255"/>
+                <Option type="QString" name="joinstyle" value="bevel"/>
+                <Option type="QString" name="offset" value="0,0"/>
+                <Option type="QString" name="offset_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="offset_unit" value="MM"/>
+                <Option type="QString" name="outline_color" value="35,35,35,255"/>
+                <Option type="QString" name="outline_style" value="solid"/>
+                <Option type="QString" name="outline_width" value="0.26"/>
+                <Option type="QString" name="outline_width_unit" value="MM"/>
+                <Option type="QString" name="style" value="solid"/>
+              </Option>
+              <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="color" v="133,182,111,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="35,35,35,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="dualview/previewExpressions">
+          <value>"FRBRExpression"</value>
+        </property>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <legend type="default-vector"/>
+      <referencedLayers/>
+      <fieldConfiguration>
+        <field name="FRBRExpression" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Naam" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Verwijzing" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Actualiteit" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Geboorteregeling" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Eindverantwoordelijke" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Maker" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Officiele_titel" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Alternatieve_titel" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="Opvolger_van" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="naukerigheid" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="eenheidLabel" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="eenheidID" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="normLabel" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="normID" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="FRBRExpression" name="" index="0"/>
+        <alias field="Naam" name="" index="1"/>
+        <alias field="Verwijzing" name="" index="2"/>
+        <alias field="Actualiteit" name="" index="3"/>
+        <alias field="Geboorteregeling" name="" index="4"/>
+        <alias field="Eindverantwoordelijke" name="" index="5"/>
+        <alias field="Maker" name="" index="6"/>
+        <alias field="Officiele_titel" name="" index="7"/>
+        <alias field="Alternatieve_titel" name="" index="8"/>
+        <alias field="Opvolger_van" name="" index="9"/>
+        <alias field="naukerigheid" name="" index="10"/>
+        <alias field="eenheidLabel" name="" index="11"/>
+        <alias field="eenheidID" name="" index="12"/>
+        <alias field="normLabel" name="" index="13"/>
+        <alias field="normID" name="" index="14"/>
+      </aliases>
+      <defaults>
+        <default field="FRBRExpression" expression="" applyOnUpdate="0"/>
+        <default field="Naam" expression="" applyOnUpdate="0"/>
+        <default field="Verwijzing" expression="" applyOnUpdate="0"/>
+        <default field="Actualiteit" expression="" applyOnUpdate="0"/>
+        <default field="Geboorteregeling" expression="" applyOnUpdate="0"/>
+        <default field="Eindverantwoordelijke" expression="" applyOnUpdate="0"/>
+        <default field="Maker" expression="" applyOnUpdate="0"/>
+        <default field="Officiele_titel" expression="" applyOnUpdate="0"/>
+        <default field="Alternatieve_titel" expression="" applyOnUpdate="0"/>
+        <default field="Opvolger_van" expression="" applyOnUpdate="0"/>
+        <default field="naukerigheid" expression="" applyOnUpdate="0"/>
+        <default field="eenheidLabel" expression="" applyOnUpdate="0"/>
+        <default field="eenheidID" expression="" applyOnUpdate="0"/>
+        <default field="normLabel" expression="" applyOnUpdate="0"/>
+        <default field="normID" expression="" applyOnUpdate="0"/>
+      </defaults>
+      <constraints>
+        <constraint field="FRBRExpression" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Naam" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Verwijzing" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Actualiteit" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Geboorteregeling" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Eindverantwoordelijke" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Maker" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Officiele_titel" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Alternatieve_titel" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="Opvolger_van" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="naukerigheid" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="eenheidLabel" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="eenheidID" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="normLabel" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+        <constraint field="normID" constraints="0" notnull_strength="0" unique_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="FRBRExpression" exp="" desc=""/>
+        <constraint field="Naam" exp="" desc=""/>
+        <constraint field="Verwijzing" exp="" desc=""/>
+        <constraint field="Actualiteit" exp="" desc=""/>
+        <constraint field="Geboorteregeling" exp="" desc=""/>
+        <constraint field="Eindverantwoordelijke" exp="" desc=""/>
+        <constraint field="Maker" exp="" desc=""/>
+        <constraint field="Officiele_titel" exp="" desc=""/>
+        <constraint field="Alternatieve_titel" exp="" desc=""/>
+        <constraint field="Opvolger_van" exp="" desc=""/>
+        <constraint field="naukerigheid" exp="" desc=""/>
+        <constraint field="eenheidLabel" exp="" desc=""/>
+        <constraint field="eenheidID" exp="" desc=""/>
+        <constraint field="normLabel" exp="" desc=""/>
+        <constraint field="normID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig actionWidgetStyle="dropDown" sortOrder="0" sortExpression="">
+        <columns>
+          <column type="field" name="FRBRExpression" width="-1" hidden="0"/>
+          <column type="field" name="Naam" width="-1" hidden="0"/>
+          <column type="field" name="Verwijzing" width="-1" hidden="0"/>
+          <column type="field" name="Actualiteit" width="-1" hidden="0"/>
+          <column type="field" name="Geboorteregeling" width="-1" hidden="0"/>
+          <column type="field" name="Eindverantwoordelijke" width="146" hidden="0"/>
+          <column type="field" name="Maker" width="-1" hidden="0"/>
+          <column type="field" name="Officiele_titel" width="-1" hidden="0"/>
+          <column type="field" name="Alternatieve_titel" width="-1" hidden="0"/>
+          <column type="field" name="Opvolger_van" width="-1" hidden="0"/>
+          <column type="actions" width="-1" hidden="1"/>
+          <column type="field" name="naukerigheid" width="-1" hidden="0"/>
+          <column type="field" name="eenheidLabel" width="-1" hidden="0"/>
+          <column type="field" name="eenheidID" width="-1" hidden="0"/>
+          <column type="field" name="normLabel" width="-1" hidden="0"/>
+          <column type="field" name="normID" width="-1" hidden="0"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <storedexpressions/>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <dataDefinedFieldProperties/>
+      <widgets/>
+      <previewExpression>"FRBRExpression"</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+  </maplayers>
+</qlr>
