@@ -14,7 +14,7 @@
     
     <!-- schema version -->
     <xsl:param name="schemaversion" select="'1.1.0'"/>
-    <xsl:param name="schemalocation" select="'https://standaarden.overheid.nl/lvbb/stop/aanlevering https://standaarden.overheid.nl/lvbb/1.1.0/lvbb-stop-aanlevering.xsd'"/>
+    <xsl:param name="schemalocation" select="concat('https://standaarden.overheid.nl/lvbb/stop/aanlevering https://standaarden.overheid.nl/lvbb/',$schemaversion,'/lvbb-stop-aanlevering.xsd')"/>
     
     <!-- get filename and open gml file -->
     <xsl:param name="gml_file" select="//bestandsnaam/text()"/>
@@ -52,6 +52,7 @@
                     <xsl:element name="soortWork" namespace="https://standaarden.overheid.nl/stop/imop/data/"><xsl:value-of select="$soortWork"/></xsl:element>
                 </xsl:element>
                 <xsl:element name="InformatieObjectVersieMetadata" namespace="https://standaarden.overheid.nl/stop/imop/data/">
+                    <xsl:element name="heeftGeboorteregeling"  namespace="https://standaarden.overheid.nl/stop/imop/data/"><xsl:value-of select="$geboorteregeling"/></xsl:element>
                     <xsl:element name="heeftBestanden" namespace="https://standaarden.overheid.nl/stop/imop/data/">
                         <xsl:element name="heeftBestand" namespace="https://standaarden.overheid.nl/stop/imop/data/">
                             <xsl:element name="Bestand" namespace="https://standaarden.overheid.nl/stop/imop/data/">

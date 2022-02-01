@@ -4,16 +4,16 @@
 
 [general]
 name=DSO GML
-qgisMinimumVersion=3.0
+qgisMinimumVersion=3.18
 description=DSO GML
-version=1.0
+version=1.1
 author=Kasper Lingbeek
-email=k.lingbeek@atos.net
+email=kasper.lingbeek@atos.net
 
 about=DSO GML
 
 tracker=http://bugs
-repository=http://repo
+repository=https://github.com//Geonovum//dso_gio_qgis_plugin
 # End of mandatory metadata
 
 # Recommended items:
@@ -23,10 +23,12 @@ hasProcessingProvider=no
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=python
+tags=Omgevingswet, GIO, DSO, gml, xml, STOP
+
+Category of the plugin: Raster, Vector, Database or Web
+category=Vector
 
 homepage=http://www.geonovum.nl
-category=Plugins
 icon=icon.png
 # experimental flag
 experimental=True
@@ -38,9 +40,6 @@ deprecated=False
 # (or upgraded) can be specified.
 # Check the documentation for more information.
 # plugin_dependencies=
-
-Category of the plugin: Raster, Vector, Database or Web
-#category=Vector
 
 # If the plugin can run on QGIS Server.
 server=False
