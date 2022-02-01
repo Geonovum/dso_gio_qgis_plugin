@@ -17,32 +17,35 @@
     
     <!-- schema version -->
     <xsl:param name="schemaversion" select="'1.1.0'"/>
-    <xsl:param name="schemalocation" select="'https://standaarden.overheid.nl/stop/imop/geo/ https://standaarden.overheid.nl/stop/1.1.0/imop-geo.xsd'"/>
+    <xsl:param name="schemalocation" select="concat('https://standaarden.overheid.nl/stop/imop/geo/ https://standaarden.overheid.nl/stop/',$schemaversion,'/imop-geo.xsd')"/>
     
     <xsl:param name="gml_file" select="string(//bestandsnaam/text())"/>
     <xsl:param name="gml" select="document(concat('file:/',$gml_file))"/>
     <xsl:param name="output" select="concat('file:/',substring-before($gml_file,'.gml'),'_gio.gml')"/>
     
-    <!--<xsl:param name="GUID" select="substring-after(/element()/@gml:id,'-')"/>-->
-    <xsl:param name="id" select="//id/text()"/>
-    <xsl:param name="Naam" select="//naamInformatieObject/text()"/>
-    <xsl:param name="FRBRExpression" select="//FRBRExpression/text()"/>
-    <xsl:param name="Verwijzing" select="//Verwijzing/text()"/>
-    <xsl:param name="Actualiteit" select="//Actualiteit/text()"/>
+    <xsl:param name="ids" select="/gio/ids"/> <!--lijst met guids-->
+    <xsl:param name="namen" select="/gio/namen"/> <!--lijst namen met volgnummers-->
+    <xsl:param name="Naam" select="/gio/naamInformatieObject/text()"/>
+    <xsl:param name="FRBRExpression" select="/gio/FRBRExpression/text()"/>
+    <xsl:param name="Verwijzing" select="/gio/Verwijzing/text()"/>
+    <xsl:param name="Actualiteit" select="/gio/Actualiteit/text()"/>
     
     <!-- open gml and apply templates on it -->
     <xsl:template match="/gio">
+        <xsl:message>gio|<xsl:value-of select="$gml_file"/></xsl:message>
         <xsl:apply-templates select="$gml/*"/>
     </xsl:template>
     
     <!--Identity template, kopieer alle inhoud -->
     <xsl:template match="@*|node()">
+        <xsl:message>Identity</xsl:message>
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
     </xsl:template>
     
     <xsl:template match="//*[local-name()='FeatureCollection']">
+        <xsl:message>FeatureCollection</xsl:message>
         <!-- vanwege parser in python geen xsl:element hier gebruiken, namespaces komen er anders niet in -->
         <geo:GeoInformatieObjectVaststelling>
             <xsl:attribute name="xsi:schemaLocation"><xsl:value-of select="$schemalocation"/></xsl:attribute>
@@ -89,25 +92,30 @@
     
     <!-- featureMember naar Locatie -->
     <xsl:template match="//*[local-name()='featureMember']">
+        <xsl:message>featureMember</xsl:message>
+        <!-- Bij meerdere featureMembers -->
+        <xsl:variable name="pos" select="count(preceding-sibling::*[local-name()='featureMember'])+1"/>
+        <xsl:variable name="id"><xsl:value-of select="$ids/*[$pos]/text()"/></xsl:variable>
         <xsl:element name="geo:Locatie">
-                <xsl:apply-templates select="@*|node()"/>
-        </xsl:element>
-    </xsl:template>
-    
-    <!-- 'geometrie' veld -->
-    <xsl:template match="//*[local-name()='geometrie']">
-        <xsl:element name="geo:naam"><xsl:value-of select="$Naam"/></xsl:element>
-        <xsl:element name="geo:geometrie">
-            <xsl:element name="basisgeo:Geometrie" namespace="http://www.geostandaarden.nl/basisgeometrie/1.0">
-                <xsl:attribute name="gml:id"><xsl:value-of select="concat('id-',$id,'-xx')"/></xsl:attribute>
-                <xsl:element name="basisgeo:id">
-                    <xsl:choose>
-                        <xsl:when test="./*[local-name()='id']/text()"><xsl:value-of select="./*[local-name()='id']/text()"/></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="$id"/></xsl:otherwise>
-                    </xsl:choose>
-                </xsl:element>
-                <xsl:element name="basisgeo:geometrie">
-                    <xsl:apply-templates select="./*[local-name()='geometryProperty']/*" xpath-default-namespace="https://standaarden.overheid.nl/stop/imop/geo/"/>
+            <xsl:variable name="LocatieNaam">
+                <xsl:choose>
+                    <!--<xsl:when test="./parent::node()/count(*[local-name()='featureMember'])=1">-->
+                    <xsl:when test="count(./parent::node()/*[local-name()='featureMember'])=1">
+                        <xsl:value-of select="$Naam"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$namen/*[$pos]/text()"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:element name="geo:naam"><xsl:value-of select="$LocatieNaam"/></xsl:element>
+            <xsl:element name="geo:geometrie">
+                <xsl:element name="basisgeo:Geometrie" namespace="http://www.geostandaarden.nl/basisgeometrie/1.0">
+                    <xsl:attribute name="gml:id"><xsl:value-of select="concat('id-',$id,'-xx')"/></xsl:attribute>
+                    <xsl:element name="basisgeo:id"><xsl:value-of select="$id"/></xsl:element>
+                    <xsl:element name="basisgeo:geometrie">
+                        <xsl:apply-templates select=".//*[local-name()='geometryProperty']/*" xpath-default-namespace="https://standaarden.overheid.nl/stop/imop/geo/"/>
+                    </xsl:element>
                 </xsl:element>
             </xsl:element>
         </xsl:element>
