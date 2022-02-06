@@ -312,13 +312,12 @@ class dsoGML:
         os.chdir(temp_dir)
         
         # opties voor opslaan instellen
-        #option_target_ns = '-dsco target_namespace="https://standaarden.overheid.nl/stop/imop/geo"'
-        #option_prefix = '-dsco prefix=geo'
+        option_target_ns = '-dsco target_namespace="https://standaarden.overheid.nl/stop/imop/geo"'
+        option_prefix = '-dsco prefix=geo'
         option_xsischema = '-dsco XSISCHEMA=OFF'
-        #option_xsischemauri = '-dsco XSISCHEMAURI="https://standaarden.overheid.nl/stop/imop/geo/ https://standaarden.overheid.nl/stop/1.1.0/imop-geo.xsd"'
+        option_xsischemauri = '-dsco XSISCHEMAURI="http://www.w3.org/2001/XMLSchema-instance"'
         option_format = '-dsco FORMAT="GML3.2"'
         option_gml_feature_collection = '-dsco GML_FEATURE_COLLECTION=no'
-        #option_gml_id = '-dsco GML_ID="id-{}"'.format(uuid.uuid4())
         option_write_feature_bounded_by = '-dsco WRITE_FEATURE_BOUNDED_BY=no'
         
         # vaste naam aan layer geven, wordt geometry field naam
@@ -330,33 +329,34 @@ class dsoGML:
             layer = self.createReprojectedLayer(layer, target_srs)
             layer_id = layer.id()
             reproject_layer = QgsProject.instance().addMapLayer(layer,False)
-
+            
         if not layer.isValid():
             raise GeoAlgorithmExecutionException('Problema ao criar camada reprojetada!')
             return None
             
         #QgsMessageLog.logMessage('layer id: {}'.format(layer_id), 'DSO GML', Qgis.Info)
-
-        dsco = ' '.join([#option_target_ns,
-                         #option_prefix,
+        
+        dsco = ' '.join([option_target_ns,
+                         option_prefix,
                          option_xsischema,
-                         #option_xsischemauri,
+                         option_xsischemauri,
                          option_format,
                          option_gml_feature_collection,
-                         #option_gml_id,
                          option_write_feature_bounded_by,
                          nln,
                          nlt])
-
+                         
         #QgsMessageLog.logMessage(dsco, 'DSO GML', Qgis.Info)
-        
-        #test=processing.run("qgis:checkvalidity", {'INPUT_LAYER':layer_id,'METHOD':2,'IGNORE_RING_SELF_INTERSECTION':False,'VALID_OUTPUT':'TEMPORARY_OUTPUT','INVALID_OUTPUT':'TEMPORARY_OUTPUT','ERROR_OUTPUT':'TEMPORARY_OUTPUT'})
         
         # select features if attribuutlijst en attribuutwaardelijst is activated
         #QgsMessageLog.logMessage('Filter: {}'.format(self.dlg.Filter.isChecked()), 'DSO GML', Qgis.Info)
+        field=''
         if self.dlg.Filter.isChecked() == 1:
-            layer.selectByExpression("\"{0}\"=\'{1}\'".format(self.dlg.attribuutlijst.currentText(),self.dlg.attribuutwaardelijst.currentText()))
-
+            if self.dlg.attribuutwaardelijst.currentText()=='':
+                field = self.dlg.attribuutlijst.currentText()
+            elif not (self.dlg.dissolve.checkState() == 0 and self.dlg.Losse_GIOs.isChecked()):
+                layer.selectByExpression("\"{0}\"=\'{1}\'".format(self.dlg.attribuutlijst.currentText(),self.dlg.attribuutwaardelijst.currentText()))
+        
         # select all features if no features are selected
         if layer.selectedFeatureCount() == 0:
             layer.selectAll()
@@ -374,7 +374,11 @@ class dsoGML:
             
         # Dissolvwe
         if self.dlg.dissolve.checkState() == 2:
-            layer_id=dissolve=processing.run("native:dissolve", {'INPUT':layer_id,'FIELD':[],'OUTPUT':'dissolve.geojson'})['OUTPUT']
+            if field:
+                layer_id=dissolve=processing.run("native:dissolve", {'INPUT':layer_id,'FIELD':[field],'OUTPUT':'dissolve.geojson'})['OUTPUT']
+            else:
+                layer_id=dissolve=processing.run("native:dissolve", {'INPUT':layer_id,'FIELD':[],'OUTPUT':'dissolve.geojson'})['OUTPUT']
+            #processing.run("native:dissolve", {'INPUT':'F:\\DSO\\Geonovum\\GitHub\\xml_omgevingsplan_gemeentestad\\opdracht\\Bouwhoogte.gml|layername=gio|geometrytype=Polygon|option:FORCE_SRS_DETECTION=YES','FIELD':['kwantitatieveNormwaarde'],'OUTPUT':'TEMPORARY_OUTPUT'})
         
         # Simplify Distance (Douglas-Peucker)
         if self.dlg.simplify.checkState() == 2:
@@ -444,7 +448,7 @@ class dsoGML:
         file = self.xslt_file('GML')
         # fill xml for transformation from dialog
         dlg_xml = self.xml()
-        
+        #return
         # prepare transformation for gml creation
         QgsMessageLog.logMessage('xslt file: {}'.format(file), 'DSO GML', Qgis.Info)
         xslt = ET.parse(file)
@@ -516,10 +520,10 @@ class dsoGML:
         ET.SubElement(gio, 'opvolgerVan').text = self.dlg.OpvolgerVan.text()
         ET.SubElement(gio, 'publicatieinstructie').text = 'TeConsolideren'
         ET.SubElement(gio, 'formaatInformatieobject').text = '/join/id/stop/informatieobject/gio_002'
-        ET.SubElement(gio, 'naamInformatieObject').text = self.dlg.Naam.text()
-        ET.SubElement(gio, 'id').text = str(uuid.uuid4())
         ET.SubElement(gio, 'Verwijzing').text = self.dlg.Verwijzing.text()
         ET.SubElement(gio, 'Actualiteit').text = self.dlg.Actualiteit.text()
+        ET.SubElement(gio, 'naamInformatieObject').text = self.dlg.Naam.text()
+        ET.SubElement(gio, 'id').text = str(uuid.uuid4())
         # add enough guids and names for use with multiple locations
         ids = ET.SubElement(gio, 'ids')
         names = ET.SubElement(gio, 'namen')
@@ -527,10 +531,15 @@ class dsoGML:
         features = []
         for feature in layer.getFeatures():
             ET.SubElement(ids, 'id').text = str(uuid.uuid4())
+            # create names with values
             ET.SubElement(names, 'naamInformatieObject').text = '{0}-{1}'.format(self.dlg.Naam.text(),str(feature.id()))
-        
+        # get selected attribute when filter is checked
+        if self.dlg.Filter.isChecked():
+            ET.SubElement(gio, 'Attribuut').text = self.dlg.attribuutlijst.currentText()
+        else:
+            ET.SubElement(gio, 'Attribuut').text = ''
         # Uncomment next line and change path for debugging
-        #ET.ElementTree(gio).write("C:/Users/W10_admin/Documents/gio.xml")
+        ET.ElementTree(gio).write("C:/Users/W10_admin/Documents/gio.xml")
         return gio
                 
     def dso_versions(self):
@@ -550,10 +559,12 @@ class dsoGML:
         return file
         
     def result_check(self):
+        # checks on input data
         result=[]
         if not self.dlg.mQgsFileWidget.filePath():
             result.append("Geen gml bestand gekozen")
-        # FRBRExpression checks (gm mnre ws with 4 digits. pv with 2 digits)
+        # FRBRExpression checks
+        # BG('gm', 'mnre' or 'ws' with 4 digits. 'pv' with 2 digits)
         bg_p = re.compile('\\b(gm|mnre|ws)([0-9]{4})\\b|\\b(pv)([0-9]{2})\\b')
         FRBRExpression = self.dlg.FRBRExpression.text()
         if not FRBRExpression:
@@ -563,6 +574,10 @@ class dsoGML:
             result.append("FRBRExpression is geen geldige join identifier")
         elif len(FRBRExpression.split('/')) < 8:
             result.append("FRBRExpression is niet volledig")
+        elif len(FRBRExpression.split(' '))>1:
+            result.append("FRBRExpression bevat een spatie")
+        elif len(FRBRExpression.split('.'))>1:
+            result.append("FRBRExpression bevat een punt")
         elif not bg_p.match(FRBRExpression.split('/')[4]):
             result.append("Fout in BG deel van FRBRExpression")
         return result
@@ -577,11 +592,12 @@ class dsoGML:
             check = self.result_check()
             # if no checks then proceed
             if not check:
-                # get layer, layer id, filename and FFRBRExpression
+                # get layer, layer id, filename and FFRBRExpression (original)
                 layer = self.dlg.mMapLayerComboBox.currentLayer()
                 layer_id = layer.id()
                 fileName = self.dlg.mQgsFileWidget.filePath()
                 FRBRExpression = self.dlg.FRBRExpression.text()
+                Locatie_Naam = self.dlg.Naam.text()
                 # split the expression
                 FRBRList = FRBRExpression.split('/')
                 # get the <overig> part of the expression
@@ -657,8 +673,8 @@ class dsoGML:
                                 layer.selectByExpression("\"{0}\"=\'{1}\'".format(attribuut,waarde))
                                 QgsMessageLog.logMessage('Selectie: {}'.format(str(layer.selectedFeatureCount())),'DSO GML', Qgis.Info)
                                 # set filename
-                                fileName = os.path.join(os.path.dirname(self.dlg.mQgsFileWidget.filePath()),'{}.gml'.format(waarde.replace(' ','_'))).replace('\\','/')
-                                self.dlg.mQgsFileWidget.setFilePath(fileName)
+                                #fileName = os.path.join(os.path.dirname(self.dlg.mQgsFileWidget.filePath()),'{}.gml'.format(waarde.replace(' ','_'))).replace('\\','/')
+                                self.dlg.mQgsFileWidget.setFilePath(fileName.replace('.gml','_{0}-{1}.gml'.format(attribuut.replace(' ','_'),waarde.replace(' ','_'))).replace('\\','/'))
                                 
                                 self.catExpression(FRBRList, item6, number)
                                 number +=1
@@ -672,13 +688,17 @@ class dsoGML:
                             # loop through filtered features
                             layer.selectByExpression("\"{0}\"=\'{1}\'".format(attribuut,waarde))
                             feats = layer.selectedFeatureIds()
+                            layer.removeSelection()
                             for fid in feats:
-                                layer.select(fid)
+                                layer.selectByIds([fid])
+                                QgsMessageLog.logMessage('fid: {}'.format(fid),'DSO GML', Qgis.Info)
+                                QgsMessageLog.logMessage('FeatureCount: {}'.format(str(layer.selectedFeatureCount())),'DSO GML', Qgis.Info)
+                                self.dlg.mQgsFileWidget.setFilePath(fileName.replace('.gml','_{0}-{1}-{2}.gml'.format(attribuut.replace(' ','_'),waarde.replace(' ','_'),str(fid))).replace('\\','/'))
                                 # catExpression with Naam or number
                                 self.catExpression(FRBRList, item6, fid)
                                 self.export_dso_gml()
                                 self.transform()
-                                layer.deselect(fid)
+                                layer.removeSelection()
                 else:
                     QgsMessageLog.logMessage('1 GIO','DSO GML', Qgis.Info)
                     self.catExpression(FRBRList, item6)
@@ -692,6 +712,8 @@ class dsoGML:
                 # set original filename and FRBRExpression
                 self.dlg.mQgsFileWidget.setFilePath(fileName)
                 self.dlg.FRBRExpression.setText(FRBRExpression)
+                # set original Locatie Naam
+                self.dlg.Naam.setText(Locatie_Naam)
                 # With Apply keep dialog open
                 if button_text == 'Apply':
                     self.run()
@@ -706,7 +728,7 @@ class dsoGML:
         # if FRBRExpression has placeholder <Naam> use Naam
         if item6 == '<Naam>':
             # use placeholder <Naam>: replace 6th item in the list by value in dialog field 'Naam'
-            FRBRList[6] = self.dlg.Naam.text()
+            FRBRList[6] = self.dlg.Naam.text().replace(' ','_')
         elif number > 0:
             # use number: add a _ and number to the 6th item in the list
             FRBRList[6] = '{0}_{1}'.format(item6, number)

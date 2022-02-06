@@ -29,6 +29,7 @@
     <xsl:param name="FRBRExpression" select="/gio/FRBRExpression/text()"/>
     <xsl:param name="Verwijzing" select="/gio/Verwijzing/text()"/>
     <xsl:param name="Actualiteit" select="/gio/Actualiteit/text()"/>
+    <xsl:param name="Attribuut" select="/gio/Attribuut/text()"/>
     
     <!-- open gml and apply templates on it -->
     <xsl:template match="/gio">
@@ -67,7 +68,7 @@
                     </xsl:element>
                 </xsl:element>
             </xsl:element>
-        <!--</xsl:element>-->
+            <!--</xsl:element>-->
         </geo:GeoInformatieObjectVaststelling>
     </xsl:template>
     
@@ -76,7 +77,7 @@
     
     <!-- gml:id uit root overslaan -->
     <xsl:template match="@gml:id"/>
-
+    
     <!-- tijdelijke elementen overslaan -->
     <xsl:template match="id"/>
     <xsl:template match="Naam"/>
@@ -96,16 +97,25 @@
         <!-- Bij meerdere featureMembers -->
         <xsl:variable name="pos" select="count(preceding-sibling::*[local-name()='featureMember'])+1"/>
         <xsl:variable name="id"><xsl:value-of select="$ids/*[$pos]/text()"/></xsl:variable>
+        <xsl:variable name="parent" select="./../node()"/>
+        <xsl:variable name="count" select="count($parent[local-name()='featureMember'])"/>
         <xsl:element name="geo:Locatie">
             <xsl:variable name="LocatieNaam">
                 <xsl:choose>
-                    <!--<xsl:when test="./parent::node()/count(*[local-name()='featureMember'])=1">-->
-                    <xsl:when test="count(./parent::node()/*[local-name()='featureMember'])=1">
-                        <xsl:value-of select="$Naam"/>
+                    <!-- Als filter is ingeschakeld -->
+                    <xsl:when test="$Attribuut!=''">
+                        <xsl:value-of select=".//*[local-name()=$Attribuut]/text()"/>
                     </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$namen/*[$pos]/text()"/>
-                </xsl:otherwise>
+                    <xsl:otherwise>
+                        <xsl:choose>
+                            <xsl:when test="$count>1">
+                                <xsl:value-of select="$namen/*[$pos]/text()"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$Naam"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
             <xsl:element name="geo:naam"><xsl:value-of select="$LocatieNaam"/></xsl:element>
