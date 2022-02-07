@@ -672,8 +672,8 @@ class dsoGML:
                                 QgsMessageLog.logMessage('Attribuutwaarde: {}'.format(waarde),'DSO GML', Qgis.Info)
                                 layer.selectByExpression("\"{0}\"=\'{1}\'".format(attribuut,waarde))
                                 QgsMessageLog.logMessage('Selectie: {}'.format(str(layer.selectedFeatureCount())),'DSO GML', Qgis.Info)
-                                # set filename
-                                #fileName = os.path.join(os.path.dirname(self.dlg.mQgsFileWidget.filePath()),'{}.gml'.format(waarde.replace(' ','_'))).replace('\\','/')
+                                # set value in Naam
+                                self.dlg.Naam.setText(waarde)
                                 self.dlg.mQgsFileWidget.setFilePath(fileName.replace('.gml','_{0}-{1}.gml'.format(attribuut.replace(' ','_'),waarde.replace(' ','_'))).replace('\\','/'))
                                 
                                 self.catExpression(FRBRList, item6, number)

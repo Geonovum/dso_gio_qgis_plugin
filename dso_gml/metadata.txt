@@ -6,7 +6,7 @@
 name=DSO GML
 qgisMinimumVersion=3.18
 description=DSO GML
-version=1.1.1
+version=1.1.2
 author=Kasper Lingbeek
 email=kasper.lingbeek@atos.net
 
