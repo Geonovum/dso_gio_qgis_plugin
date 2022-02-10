@@ -539,7 +539,7 @@ class dsoGML:
         else:
             ET.SubElement(gio, 'Attribuut').text = ''
         # Uncomment next line and change path for debugging
-        ET.ElementTree(gio).write("C:/Users/W10_admin/Documents/gio.xml")
+        # ET.ElementTree(gio).write("C:/Users/W10_admin/Documents/gio.xml")
         return gio
                 
     def dso_versions(self):
