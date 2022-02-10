@@ -349,7 +349,7 @@ class dsoGML:
         #QgsMessageLog.logMessage(dsco, 'DSO GML', Qgis.Info)
         
         # select features if attribuutlijst en attribuutwaardelijst is activated
-        #QgsMessageLog.logMessage('Filter: {}'.format(self.dlg.Filter.isChecked()), 'DSO GML', Qgis.Info)
+        QgsMessageLog.logMessage('Dissolve: {}'.format(str(self.dlg.dissolve.isChecked())), 'DSO GML', Qgis.Info)
         field=''
         if self.dlg.Filter.isChecked() == 1:
             if self.dlg.attribuutwaardelijst.currentText()=='':
@@ -384,7 +384,7 @@ class dsoGML:
         if self.dlg.simplify.checkState() == 2:
             # get the numer for afstand: from mm to m
             meter = self.dlg.afstand.value()/1000
-            layer_id=simplify=processing.run("native:simplifygeometries", {'INPUT':layer_id,'METHOD':0,'TOLERANCE':self.dlg.afstand.value(),'OUTPUT':'simplify.geojson'})['OUTPUT']
+            layer_id=simplify=processing.run("native:simplifygeometries", {'INPUT':layer_id,'METHOD':0,'TOLERANCE':meter,'OUTPUT':'simplify.geojson'})['OUTPUT']
         
         # Snap - valid
         if self.dlg.snap.checkState() == 2:
@@ -539,7 +539,7 @@ class dsoGML:
         else:
             ET.SubElement(gio, 'Attribuut').text = ''
         # Uncomment next line and change path for debugging
-        # ET.ElementTree(gio).write("C:/Users/W10_admin/Documents/gio.xml")
+        ET.ElementTree(gio).write("C:/Users/W10_admin/Documents/gio.xml")
         return gio
                 
     def dso_versions(self):

@@ -23,7 +23,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabGML">
       <attribute name="title">
@@ -947,6 +947,9 @@
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
               </property>
+              <property name="keyboardTracking">
+               <bool>false</bool>
+              </property>
               <property name="suffix">
                <string> mm</string>
               </property>
@@ -957,7 +960,7 @@
                <number>1</number>
               </property>
               <property name="maximum">
-               <number>999</number>
+               <number>9999</number>
               </property>
               <property name="value">
                <number>1</number>
@@ -992,8 +995,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>456</width>
-            <height>186</height>
+            <width>98</width>
+            <height>89</height>
            </rect>
           </property>
           <property name="accessibleName">
@@ -1085,8 +1088,8 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>461</width>
-            <height>167</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
           <attribute name="label">
