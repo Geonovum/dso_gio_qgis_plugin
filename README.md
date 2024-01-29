@@ -1,3 +1,5 @@
+**Deze plugin wordt niet meer actief beheerd door Geonovum en is daarom gearchiveerd.**
+
 GIO QGIS plugin
 ===============
 Versie 1.1
